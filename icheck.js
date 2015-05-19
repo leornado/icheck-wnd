@@ -316,11 +316,11 @@
 
     // Check, disable or indeterminate
     if (/^(ch|di|in)/.test(method) && !active) {
-      on(input, state);
+      on(input, state, undefined, method);
 
     // Uncheck, enable or determinate
     } else if (/^(un|en|de)/.test(method) && active) {
-      off(input, state);
+      off(input, state, undefined, method);
 
     // Update
     } else if (method == _update) {
@@ -328,9 +328,9 @@
       // Handle states
       for (var each in active) {
         if (active[each]) {
-          on(input, each, true);
+          on(input, each, true, method);
         } else {
-          off(input, each, true);
+          off(input, each, true, method);
         }
       }
 
@@ -344,16 +344,16 @@
       // Toggle checked state
       if (active) {
         if (node[_type] !== _radio) {
-          off(input, state);
+          off(input, state, undefined, method);
         }
       } else {
-        on(input, state);
+        on(input, state, undefined, method);
       }
     }
   }
 
   // Add checked, disabled or indeterminate state
-  function on(input, state, keep) {
+  function on(input, state, keep, method) {
     var node = input[0],
       parent = input.parent(),
       checked = state == _checked,
@@ -406,7 +406,7 @@
       }
 
       // Trigger callbacks
-      callbacks(input, checked, state, keep);
+      callbacks(input, checked, state, keep, method);
     }
 
     // Add proper cursor
@@ -427,7 +427,7 @@
   }
 
   // Remove checked, disabled or indeterminate state
-  function off(input, state, keep) {
+  function off(input, state, keep, method) {
     var node = input[0],
       parent = input.parent(),
       checked = state == _checked,
@@ -446,7 +446,7 @@
       }
 
       // Trigger callbacks
-      callbacks(input, checked, callback, keep);
+      callbacks(input, checked, callback, keep, method);
     }
 
     // Add proper cursor
@@ -497,13 +497,13 @@
   }
 
   // Executable handlers
-  function callbacks(input, checked, callback, keep) {
+  function callbacks(input, checked, callback, keep, method) {
     if (!keep) {
       if (checked) {
         input[_callback]('ifToggled');
       }
 
-      input[_callback]('ifChanged')[_callback]('if' + capitalize(callback));
+      input[_callback]('ifChanged', [method])[_callback]('if' + capitalize(callback));
     }
   }
 })(window.jQuery || window.Zepto);
