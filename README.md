@@ -1,3 +1,4 @@
+# icheck-wnd modified from icheck
 # [iCheck plugin](http://fronteed.com/iCheck/) <sup>[1.0.2](#march-03-2014)</sup>
 #### Highly customizable checkboxes and radio buttons for jQuery and Zepto.
 

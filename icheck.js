@@ -500,10 +500,10 @@
   function callbacks(input, checked, callback, keep, method) {
     if (!keep) {
       if (checked) {
-        input[_callback]('ifToggled');
+        input[_callback]('ifToggled', [method, callback]);
       }
 
-      input[_callback]('ifChanged', [method])[_callback]('if' + capitalize(callback));
+      input[_callback]('ifChanged', [method, callback])[_callback]('if' + capitalize(callback), [method]);
     }
   }
 })(window.jQuery || window.Zepto);
